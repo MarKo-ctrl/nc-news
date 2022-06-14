@@ -10,3 +10,11 @@ export const getAllArticles = () => {
             return articles.data;
         })
 }
+
+export const getTopics = () => {
+    return handyNews.get("/topics")
+    .then((topics) => {
+        return topics.data.topics
+        // console.log(topics.data.topics[0].slug)
+    })
+}
