@@ -8,7 +8,7 @@ exports.toTitleCase = (str) => {
 }
 
 exports.extractDate = (str) => {
-    return str.match(/^\d{4}-(0?[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/g)[0];
+    return str.match(/^\d{4}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])/g)[0];
 }
 
 exports.extractTime = (str) => {
