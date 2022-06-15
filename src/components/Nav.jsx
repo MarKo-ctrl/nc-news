@@ -20,7 +20,7 @@ export const Nav = () => {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
                 <div className="container-fluid">
                     <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                         <li className='nav-item'>
@@ -31,8 +31,8 @@ export const Nav = () => {
                             </Link>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {topics.map((topic) => {
-                                    return <li>
-                                        <Link to="#" className="dropdown-item" >{toTitleCase(topic)}</Link>
+                                    return <li key={topic}>
+                                        <Link to={`/topics/${topic}`} className="dropdown-item" >{toTitleCase(topic)}</Link>
                                     </li>
                                 })}
                             </ul>
