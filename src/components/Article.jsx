@@ -2,9 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { LoadingSpinner } from './LoadingSpinner';
-import { getArticle } from '../utils/api';
+import { Comments } from './Comments';
+import { getArticle, patchVote } from '../utils/api';
 import { toTitleCase, extractDate } from '../utils/helpers';
-import { patchVote } from '../utils/api';
 
 export const Article = () => {
     const [articleObj, setArticleBody] = useState({});
@@ -45,7 +45,7 @@ export const Article = () => {
     return (
         <>
             {isLoading ? <LoadingSpinner /> :
-                <div className='col-md-12'>
+                <main className='col-md-12'>
                     <h4 className='ms-3'>From <Link to={`/topics/${articleObj.topic}`} className='pb-4 mb-4 fst-italic border-bottom'>{toTitleCase(articleObj.topic)}</Link></h4>
                     <article className='blog-post'>
                         <h2 className='h2'>
@@ -61,7 +61,9 @@ export const Article = () => {
                     <p className='ms-2'>Found it interesting? Vote!</p>
                     <button type="button" className="btn btn-info btn-sm ms-3" onClick={handleUpVotes}>Love it!</button>
                     <button type="button" className="btn btn-outline-info btn-sm ms-3" onClick={handleDownVotes}>Waste of time!</button>
-                </div>}
+                    <Comments/>
+                </main>
+                }
 
         </>
 
