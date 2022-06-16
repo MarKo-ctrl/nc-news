@@ -24,3 +24,10 @@ export const getArticle = (article_id) => {
             return article.data.article[0]
         })
 }
+
+export const patchVote = (article_id, inc_vote) => {
+    return handyNews.patch(`/articles/${article_id}`, inc_vote)
+    .then((article) => {
+        return article.data
+    })
+}
