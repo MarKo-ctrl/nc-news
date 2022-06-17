@@ -31,3 +31,10 @@ export const patchVote = (article_id, inc_vote) => {
         return article.data
     })
 }
+
+export const getComments = (article_id) => {
+    return handyNews.get(`/articles/${article_id}/comments`)
+    .then((comments) => {
+        return comments.data.rows
+    })
+}

@@ -3,9 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getAllArticles } from '../utils/api';
 import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
+import { LoadingSpinner } from './LoadingSpinner';
 
 
 export const Articles = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const [articlesList, setArticlesList] = useState([]);
     const { slug } = useParams()
 
@@ -14,9 +16,11 @@ export const Articles = () => {
         getAllArticles(slug)
             .then((articles) => {
                 setArticlesList(articles)
+                setIsLoading(false)
             })
     }, [slug])
 
+    if (isLoading) return <LoadingSpinner />
     return (
         <>
             {!slug ?

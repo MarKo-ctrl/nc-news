@@ -45,11 +45,13 @@ export const Nav = () => {
                             <li className='nav-item  fs-4'>
                                 <Link to="/articles" className='nav-link'>Articles</Link>
                             </li>
-                            <li className='nav-item ms-5 mt-2 fs-6'>
-                                <Link to='/user/profile' className='nav-link'>Profile</Link>
+                            </ul>
+                            <ul className='nav justify-content-end'>
+                            <li className='nav-item'>
+                                <Link to='/user/profile' className='nav-link '>Profile</Link>
                             </li>
-                            <li className='nav-item fs-6'>
-                                <Link to='/login' className='nav-link mt-2 fs-6'>Login</Link>
+                            <li className='nav-item'>
+                                <Link to='/login' className='nav-link fs-6'>Login</Link>
                             </li>
                         </ul>
                     </div>
