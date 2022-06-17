@@ -7,6 +7,7 @@ import { extractDate } from '../utils/helpers';
 
 export const Comments = () => {
     const [articleComments, setComments] = useState([])
+    const [err, setErr] = useState(null)
     const { article_id } = useParams();
 
     useEffect(() => {
@@ -14,9 +15,13 @@ export const Comments = () => {
             .then((comments) => {
                 setComments(comments)
             })
+            .catch((error) => {
+                setErr(error)
+            })
     }, [article_id])
 
 
+    if (err) return <p className='error'>No comments yet!</p>
     return (
         <>
             <section className='container mt-5'>
