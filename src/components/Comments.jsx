@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getComments } from '../utils/api';
 import { extractDate } from '../utils/helpers';
+import { PostComment } from './PostComment';
 
 
 export const Comments = () => {
@@ -25,7 +26,7 @@ export const Comments = () => {
     return (
         <>
             <section className='container mt-5'>
-                <div className="accordion" id="accordionExample">
+                <div className="accordion">
                     <div className="row  d-flex justify-content-center">
                         <section className="accordion-item">
                             <h2 className="accordion-header mt-4 me-4" id="headingOne">
@@ -33,6 +34,7 @@ export const Comments = () => {
                                     Comments ({articleComments.length})
                                 </button>
                             </h2>
+                            <PostComment />
                             <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div className="accordion-body">
                                     {articleComments.map((comment) => {

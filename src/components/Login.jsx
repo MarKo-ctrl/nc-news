@@ -13,8 +13,6 @@ export const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { user, setUser } = useContext(UserContext);
 
-
-
     useEffect(() => {
         getUsers()
             .then((users) => {
