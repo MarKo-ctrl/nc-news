@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { getTopics } from '../utils/api';
 import { toTitleCase } from '../utils/helpers';
-
+import { UserContext } from '../context/User';
 
 export const Nav = () => {
     const [topics, setTopics] = useState([]);
-
+    const { user } = useContext(UserContext)
     const handleClick = (event) => {
         event.preventDefault();
         const slug = [];
@@ -45,14 +45,18 @@ export const Nav = () => {
                             <li className='nav-item  fs-4'>
                                 <Link to="/articles" className='nav-link'>Articles</Link>
                             </li>
-                            </ul>
-                            <ul className='nav justify-content-end'>
+                        </ul>
+                        <ul className='nav justify-content-end'>
                             <li className='nav-item'>
                                 <Link to='/user/profile' className='nav-link '>Profile</Link>
                             </li>
-                            <li className='nav-item'>
-                                <Link to='/login' className='nav-link fs-6'>Login</Link>
-                            </li>
+                            {!user.username ?  <li className='nav-item'>
+                                    <Link to='/login' className='nav-link fs-6'>Login</Link>
+                                </li>
+                                : <li className='nav-item'>
+                                <Link to='/user/profile' className='nav-link fs-6'>{user.username}</Link>
+                            </li>}
+
                         </ul>
                     </div>
                 </div>

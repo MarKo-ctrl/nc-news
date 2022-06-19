@@ -37,10 +37,10 @@ export const Comments = () => {
                                 <div className="accordion-body">
                                     {articleComments.map((comment) => {
                                         return (<>
-                                            <article className='d-flex card p-3 mt-3'>
-                                                <h5>{comment.author}</h5>
-                                                <p>{extractDate(comment.created_at)}</p>
-                                                <p>{comment.body}</p>
+                                            <article key={comment.article_id} className='d-flex card p-3 mt-3'>
+                                                <h5 key={comment.author}>{comment.author}</h5>
+                                                <p key={comment.created_at}>{extractDate(comment.created_at)}</p>
+                                                <p key={comment.comment_id}>{comment.body}</p>
                                             </article>
                                         </>)
                                     })}

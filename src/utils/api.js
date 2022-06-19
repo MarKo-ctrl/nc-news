@@ -27,14 +27,21 @@ export const getArticle = (article_id) => {
 
 export const patchVote = (article_id, inc_vote) => {
     return handyNews.patch(`/articles/${article_id}`, inc_vote)
-    .then((article) => {
-        return article.data
-    })
+        .then((article) => {
+            return article.data
+        })
 }
 
 export const getComments = (article_id) => {
     return handyNews.get(`/articles/${article_id}/comments`)
-    .then((comments) => {
-        return comments.data.rows
-    })
+        .then((comments) => {
+            return comments.data.rows
+        })
+}
+
+export const getUsers = () => {
+    return handyNews.get('/users')
+        .then((users) => {
+            return users.data
+        })
 }
