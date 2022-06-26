@@ -45,3 +45,10 @@ export const getUsers = () => {
             return users.data
         })
 }
+
+export const postComment = (article_id, comment) => {
+    return handyNews.post(`/articles/${article_id}/comments`, comment)
+        .then((newComment) => {
+            return newComment.data
+        })
+}

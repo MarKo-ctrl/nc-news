@@ -32,7 +32,7 @@ export const Login = () => {
             setError({ username: "invalid username" })
         }
     }
-    console.log(error)
+    
 
     if (isLoading) return <LoadingSpinner />;
     return (<>

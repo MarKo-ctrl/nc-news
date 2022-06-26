@@ -1,15 +1,20 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { getComments } from '../utils/api';
+import { CommentSpinner } from './CommentLoading';
+import { getComments, postComment } from '../utils/api';
 import { extractDate } from '../utils/helpers';
-import { PostComment } from './PostComment';
+import { UserContext } from '../context/User';
+
 
 
 export const Comments = () => {
     const [articleComments, setComments] = useState([])
     const [err, setErr] = useState(null)
     const { article_id } = useParams();
+    const { user } = useContext(UserContext);
+    const [commentBody, setCommentBody] = useState('')
+    const [isPosted, setPosted] = useState(false)
+    const newComment = {}
 
     useEffect(() => {
         getComments(article_id)
@@ -20,6 +25,23 @@ export const Comments = () => {
                 setErr(error)
             })
     }, [article_id])
+
+
+    const handlePostComment = (event) => {
+        event.preventDefault()
+        newComment.username = user.username;
+        newComment.body = commentBody;
+        setPosted(true)
+        setCommentBody('')
+        postComment(article_id, newComment)
+            .then((postedComment) => {
+                setPosted(false)
+                setComments([...articleComments, postedComment])
+            })
+            .catch((error) => {
+                console.dir(error);
+            })
+    }
 
 
     if (err) return <p className='error'>No comments yet!</p>
@@ -34,7 +56,32 @@ export const Comments = () => {
                                     Comments ({articleComments.length})
                                 </button>
                             </h2>
-                            <PostComment />
+                            <section>
+                                <form onSubmit={handlePostComment}>
+                                    {Object.keys(user).length !== 0 ?
+                                        <fieldset >
+                                            <legend>Write your comment</legend>
+                                            <div className="mb-2">
+                                                <label htmlFor="disabledTextInput" className="form-label">{user.username}</label>
+                                                <input type="text" id="disabledTextInput" className="form-control" placeholder="What are your thoughts?" value={commentBody} onChange={(event) => setCommentBody(event.target.value)} />
+                                            </div>
+                                            {!isPosted ?
+                                                <button type="submit" className="btn btn-primary" >Submit</button>
+                                                :
+                                                <CommentSpinner />
+                                            }
+                                        </fieldset>
+                                        :
+                                        <fieldset disabled>
+                                            <legend>Write your comment</legend>
+                                            <div className="mb-3">
+                                                <label htmlFor="disabledTextInput" className="form-label"></label>
+                                                <input type="text" id="disabledTextInput" className="form-control" placeholder="You have to login before posting a comment" />
+                                            </div>
+                                            <button type="submit" className="btn btn-primary">Submit</button>
+                                        </fieldset>}
+                                </form>
+                            </section>
                             <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div className="accordion-body">
                                     {articleComments.map((comment) => {

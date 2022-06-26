@@ -47,16 +47,14 @@ export const Nav = () => {
                             </li>
                         </ul>
                         <ul className='nav justify-content-end'>
-                            <li className='nav-item'>
+                            {/* <li className='nav-item'>
                                 <Link to='/user/profile' className='nav-link '>Profile</Link>
-                            </li>
+                            </li> */}
                             {!user.username ?  <li className='nav-item'>
                                     <Link to='/login' className='nav-link fs-6'>Login</Link>
                                 </li>
-                                : <li className='nav-item'>
-                                <Link to='/user/profile' className='nav-link fs-6'>{user.username}</Link>
+                                : <li className='nav-item nav-link fs-6'>{user.username}
                             </li>}
-
                         </ul>
                     </div>
                 </div>
