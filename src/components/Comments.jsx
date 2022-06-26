@@ -4,8 +4,7 @@ import { CommentSpinner } from './CommentLoading';
 import { getComments, postComment } from '../utils/api';
 import { extractDate } from '../utils/helpers';
 import { UserContext } from '../context/User';
-
-
+import { DeleteComment } from './DeleteComment';
 
 export const Comments = () => {
     const [articleComments, setComments] = useState([])
@@ -25,7 +24,6 @@ export const Comments = () => {
                 setErr(error)
             })
     }, [article_id])
-
 
     const handlePostComment = (event) => {
         event.preventDefault()
@@ -90,6 +88,10 @@ export const Comments = () => {
                                                 <h5 key={comment.author}>{comment.author}</h5>
                                                 <p key={comment.created_at}>{extractDate(comment.created_at)}</p>
                                                 <p key={comment.comment_id}>{comment.body}</p>
+                                                {user.username === comment.author ?
+                                                    <DeleteComment comment_id={comment.comment_id} />
+                                                    :
+                                                    null}
                                             </article>
                                         </>)
                                     })}

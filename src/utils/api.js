@@ -1,4 +1,4 @@
-import axios from 'axios';
+                                          import axios from 'axios';
 
 const handyNews = axios.create({
     baseURL: "https://handy-news.herokuapp.com/api"
@@ -51,4 +51,8 @@ export const postComment = (article_id, comment) => {
         .then((newComment) => {
             return newComment.data
         })
+}
+
+export const deleteComment = (comment_id) => {
+    return handyNews.delete(`/comments/${comment_id}`)
 }
