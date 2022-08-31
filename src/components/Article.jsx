@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { LoadingSpinner } from './LoadingSpinner';
 import { Comments } from './Comments';
@@ -44,7 +43,7 @@ export const Article = () => {
     if (voteErr) return <p className='error'>{voteErr}</p>
     return (
         <>
-            {isLoading ? <LoadingSpinner /> :
+            {isLoading ? <LoadingSpinner key={articleObj.article_id} /> :
                 <main className='col-md-12'>
                     <h4 className='ms-3'>From <Link to={`/topics/${articleObj.topic}`} className='pb-4 mb-4 fst-italic border-bottom'>{toTitleCase(articleObj.topic)}</Link></h4>
                     <article className='blog-post'>
@@ -61,7 +60,7 @@ export const Article = () => {
                     <p className='ms-2'>Found it interesting? Vote!</p>
                     <button type="button" className="btn btn-info btn-sm ms-3" onClick={handleUpVotes}>Love it!</button>
                     <button type="button" className="btn btn-outline-info btn-sm ms-3" onClick={handleDownVotes}>Waste of time!</button>
-                    <Comments/>
+                    <Comments key={articleObj.article_id} />
                 </main>
                 }
 

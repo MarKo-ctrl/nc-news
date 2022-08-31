@@ -16,25 +16,11 @@ ul {
   list-style-type: none;
 }
 
-.card {
-  width: 95%;
-  margin-top: 4.5rem;
-}
-
-.col-md-12 {
-  margin-top: 4.5rem;
-}
-
-.error {
-  margin-top: 4.5rem;
-}
-
-.d-flex {
-  margin-top: 4.5rem;
-}
-
 hr {
   width: 200%;
   margin-left: -50%;
 }
 
+main {
+  margin-top: 4.5rem;
+}
