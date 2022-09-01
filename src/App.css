@@ -28,7 +28,13 @@ main {
 }
 
 .list-group-item {
-  border: none
+  border: none;
+}
+
+.card {
+  width: min(90vw, 340px);
+  height: 340px;
+  margin: 0 auto;
 }
 
 .card a {
@@ -38,4 +44,12 @@ main {
 
 .card-body {
   text-align: center;
+}
+
+@media only screen and (min-width:740px) {
+  .list-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
