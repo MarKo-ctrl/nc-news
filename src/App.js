@@ -7,13 +7,15 @@ import { Articles } from './components/Articles';
 import { Article } from './components/Article';
 import { Login } from './components/Login';
 import { UserContext } from './context/User';
-import {UserProfile} from './components/UserProfile'
+import { UserProfile } from './components/UserProfile'
+import { SignUp } from './components/SignUp';
 
 function App() {
-  const [ user, setUser ] = useState({});
+  const [user, setUser] = useState({});
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser }}>
       <div className="App">
         <Nav />
         <Routes>
@@ -21,8 +23,9 @@ function App() {
           <Route path='/articles' element={<Articles />} />
           <Route path='/article/:article_id' element={<Article />} />
           <Route path='/topics/:slug' element={<Articles />} />
+          <Route path='/register' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/user/profile' element={<UserProfile/>}/>
+          <Route path='/user/profile' element={<UserProfile />} />
         </Routes>
       </div>
     </UserContext.Provider>

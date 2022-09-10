@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { Link } from "react-router-dom";
-// import ReactDOM from 'react-dom'
-// import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/User';
-import { signin } from '../utils/api';
+import { signup } from '../utils/api';
 import { LoadingSpinner } from './LoadingSpinner';
 
-export const Login = () => {
+export const SignUp = () => {
   const [input, setInput] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState({})
@@ -19,14 +16,15 @@ export const Login = () => {
     setIsSubmitted(true);
     setIsLoading(true)
 
-    signin(input)
-      .then((validUser) => {
+    signup(input)
+      .then((newUser) => {
         setIsLoading(false)
+        console.log(newUser)
 
-        if (validUser) {
-          setUser(validUser);
+        if (newUser) {
+          setUser(newUser);
         } else {
-          setError({ errMsg: 'invalid username or password' })
+          setError({ errMsg: 'something went wrong' })
         }
       })
   }
@@ -36,18 +34,31 @@ export const Login = () => {
     <>
       {!isSubmitted ?
         <>
-          <main className='mw-100'>
-            <div className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
-              <h2 className='mx-auto '>
-                Login
+          <main>
+            <div
+              className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
+              <h2 className='mx-auto'>
+                Register
               </h2>
-              <form id='login_form'>
+              <form id='registration_form'>
                 <div className='mb-3 mx-5'>
                   <label
-                    htmlFor='username'
+                    htmlFor='name'
                     className='form-label'>
-                    Username:
+                    Name:
                   </label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='name'
+                    name='name'
+                    placeholder='Your Name'
+                    onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
+                    required
+                  />
+                </div>
+                <div className='mb-3 mx-5'>
+                  <label htmlFor='username' className='form-label'>Username:</label>
                   <input
                     type='text'
                     className='form-control'
@@ -58,12 +69,8 @@ export const Login = () => {
                     required
                   />
                 </div>
-                <div
-                  className='mb-3 mx-5'>
-                  <label
-                    htmlFor='password'
-                    className='form-label'>
-                    Password:</label>
+                <div className='mb-3 mx-5'>
+                  <label htmlFor='password' className='form-label'>Password:</label>
                   <input
                     type='text'
                     className='form-control'
@@ -74,33 +81,40 @@ export const Login = () => {
                     required
                   />
                 </div>
-                <div
-                  className='d-grid gap-1 w-50 mx-auto'>
+                <div className='mb-3 mx-5'>
+                  <label
+                    htmlFor='password'
+                    className='form-label'>
+                    Confirm Password:
+                  </label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='password'
+                    name='password'
+                    placeholder='Your Password'
+                    onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
+                    required
+                  />
+                </div>
+                <div className='d-grid gap-2 w-50 mx-auto'>
                   <button
                     type='submit'
-                    className='btn btn-primary mb-3 w-60'
-                    onClick={handleSubmit}>&lt; Login &gt;
+                    className='btn btn-primary mb-3'
+                    onClick={handleSubmit}>&lt; Register &gt;
                   </button>
-                  <div className='text-center small'>
-                    Need an account?
-                    <Link
-                      to='/register'
-                      className='nav-link'>
-                      Sign up here
-                    </Link>
-                  </div>
                 </div>
               </form>
             </div>
           </main>
         </>
-        :
-        isSubmitted && Object.keys(user).length !== 0 ?
+        : isSubmitted && Object.keys(user).length !== 0 ?
           <main>
             <p
               className='success-msg'>
-              You have successfuly logged in
-              <strong>{user.username}
+              You have successfuly registered
+              <strong>
+                {user.username}
               </strong>
             </p>
           </main>
@@ -112,5 +126,6 @@ export const Login = () => {
             </p>
           </main>
       }
-    </>)
+    </>
+  )
 }
