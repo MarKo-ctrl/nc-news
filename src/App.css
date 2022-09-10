@@ -11,10 +11,12 @@ h2 {
   margin-top: 5rem;
 }
 
-ul {
-  /* padding-left: 0; */
-  list-style-type: none;
-}
+/* ul { */
+/* padding-left: 0; */
+/* list-style-type: none;
+  width: 100vw;
+  margin: 0 auto;
+} */
 
 hr {
   width: 200%;
@@ -23,4 +25,31 @@ hr {
 
 main {
   margin-top: 4.5rem;
+}
+
+.list-group-item {
+  border: none;
+}
+
+.card {
+  width: min(90vw, 340px);
+  height: 340px;
+  margin: 0 auto;
+}
+
+.card a {
+  text-align: center;
+  padding: 0.4em 0 0;
+}
+
+.card-body {
+  text-align: center;
+}
+
+@media only screen and (min-width:740px) {
+  .list-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
