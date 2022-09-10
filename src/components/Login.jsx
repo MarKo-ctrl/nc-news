@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link } from "react-router-dom";
 // import ReactDOM from 'react-dom'
 // import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/User';
@@ -31,49 +32,65 @@ export const Login = () => {
   }
 
   if (isLoading) return <LoadingSpinner />;
-  return (<>
-    {!isSubmitted ? <>
-      <main>
-        <h2 className='ms-5'>User Login</h2>
-        <form id='login_form'>
-          <div className='mb-3 mx-5'>
-            <label htmlFor='username' className='form-label'>Username:</label>
-            <input
-              type='text'
-              className='form-control'
-              id='username'
-              name='username'
-              placeholder='Your Username'
-              onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
-              required
-            />
-          </div>
-          <div className='mb-3 mx-5'>
-            <label htmlFor='password' className='form-label'>Password:</label>
-            <input
-              type='text'
-              className='form-control'
-              id='password'
-              name='password'
-              placeholder='Your Password'
-              onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
-              required
-            />
-          </div>
-          <button
-            type='submit'
-            className='btn btn-primary ms-5'
-            onClick={handleSubmit}>&lt; Login &gt;
-          </button>
-        </form>
-      </main>
-    </> : isSubmitted && Object.keys(user).length !== 0 ?
-      <main>
-        <p className='success-msg'>You have successfuly logged in <strong>{user.username}</strong></p>
-      </main> :
-      <main>
-        <p className='error-msg'>{error.errMsg}</p>
-      </main>
-    }
-  </>)
+  return (
+    <>
+      {!isSubmitted ?
+        <>
+          <main>
+            <div className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
+              <h2 className='ms-3 '>
+                Login
+              </h2>
+              <form id='login_form'>
+                <div className='mb-3 mx-5'>
+                  <label htmlFor='username' className='form-label'>Username:</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='username'
+                    name='username'
+                    placeholder='Your Username'
+                    onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
+                    required
+                  />
+                </div>
+                <div className='mb-3 mx-5'>
+                  <label htmlFor='password' className='form-label'>Password:</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='password'
+                    name='password'
+                    placeholder='Your Password'
+                    onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
+                    required
+                  />
+                </div>
+                <button
+                  type='submit'
+                  className='btn btn-primary ms-5'
+                  onClick={handleSubmit}>&lt; Login &gt;
+                </button>
+              </form>
+              <div>
+                Need an account?
+                <Link
+                  to='/register'
+                  className='nav-link'>
+                  Sign up here
+                </Link>
+              </div>
+            </div>
+          </main>
+        </>
+        : isSubmitted && Object.keys(user).length !== 0 ?
+          <main>
+            <p className='success-msg'>You have successfuly logged in <strong>{user.username}</strong></p>
+          </main>
+          :
+          <main>
+            <p className='error-msg'>{error.errMsg}</p>
+          </main>
+      }
+    </>)
 }
