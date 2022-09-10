@@ -58,6 +58,7 @@ export const Articles = () => {
         </main> :
         <>
           <main>
+
             <h2>
               {toTitleCase(slug)} Articles
             </h2>
