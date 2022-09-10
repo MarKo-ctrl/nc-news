@@ -43,7 +43,11 @@ export const Login = () => {
               </h2>
               <form id='login_form'>
                 <div className='mb-3 mx-5'>
-                  <label htmlFor='username' className='form-label'>Username:</label>
+                  <label
+                    htmlFor='username'
+                    className='form-label'>
+                    Username:
+                  </label>
                   <input
                     type='text'
                     className='form-control'
@@ -54,8 +58,12 @@ export const Login = () => {
                     required
                   />
                 </div>
-                <div className='mb-3 mx-5'>
-                  <label htmlFor='password' className='form-label'>Password:</label>
+                <div
+                  className='mb-3 mx-5'>
+                  <label
+                    htmlFor='password'
+                    className='form-label'>
+                    Password:</label>
                   <input
                     type='text'
                     className='form-control'
@@ -66,7 +74,8 @@ export const Login = () => {
                     required
                   />
                 </div>
-                <div className='d-grid gap-1 w-50 mx-auto'>
+                <div
+                  className='d-grid gap-1 w-50 mx-auto'>
                   <button
                     type='submit'
                     className='btn btn-primary mb-3 w-60'
@@ -85,13 +94,22 @@ export const Login = () => {
             </div>
           </main>
         </>
-        : isSubmitted && Object.keys(user).length !== 0 ?
+        :
+        isSubmitted && Object.keys(user).length !== 0 ?
           <main>
-            <p className='success-msg'>You have successfuly logged in <strong>{user.username}</strong></p>
+            <p
+              className='success-msg'>
+              You have successfuly logged in
+              <strong>{user.username}
+              </strong>
+            </p>
           </main>
           :
           <main>
-            <p className='error-msg'>{error.errMsg}</p>
+            <p
+              className='error-msg'>
+              {error.errMsg}
+            </p>
           </main>
       }
     </>)

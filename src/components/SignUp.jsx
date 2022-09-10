@@ -16,7 +16,6 @@ export const SignUp = () => {
     setIsSubmitted(true);
     setIsLoading(true)
 
-    // console.log(input)
     signup(input)
       .then((newUser) => {
         setIsLoading(false)
@@ -36,7 +35,8 @@ export const SignUp = () => {
       {!isSubmitted ?
         <>
           <main>
-            <div className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
+            <div
+              className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
               <h2 className='mx-auto'>
                 Register
               </h2>
@@ -110,11 +110,20 @@ export const SignUp = () => {
         </>
         : isSubmitted && Object.keys(user).length !== 0 ?
           <main>
-            <p className='success-msg'>You have successfuly registered <strong>{user.username}</strong></p>
+            <p
+              className='success-msg'>
+              You have successfuly registered
+              <strong>
+                {user.username}
+              </strong>
+            </p>
           </main>
           :
           <main>
-            <p className='error-msg'>{error.errMsg}</p>
+            <p
+              className='error-msg'>
+              {error.errMsg}
+            </p>
           </main>
       }
     </>
