@@ -32,23 +32,28 @@ export const Home = () => {
   return (
     <>
       <main>
-        <section className="carousel">
-          <CCarousel controls indicators dark>
+        <section
+          className="border border-primary mx-1">
+          <p
+            className='ms-2 fs-5 mb-0 fst-italic'>
+            Most recent entries:
+          </p>
+          <CCarousel controls dark>
             {latestArticles.map((article) => {
               return <CCarouselItem key={article.article_id}>
                 <div
-                  className="card">
+                  className="card mx-2 border-end-0 border-bottom-0 border-start-0">
                   <div
-                    className="card-body">
+                    className="card-body mx-auto text-center d-flex w-75 justify-content-center flex-column">
                     <h4
                       className='card-title'>
                       {article.title}
                     </h4>
                     <Link
-                    to={`/article/${article.article_id}`}
-                    className="card-link">
-                    Read More
-                  </Link>
+                      to={`/article/${article.article_id}`}
+                      className="card-link">
+                      Read More
+                    </Link>
                   </div>
                 </div>
               </CCarouselItem>
