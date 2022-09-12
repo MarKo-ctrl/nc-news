@@ -135,8 +135,7 @@ export const Comments = () => {
                 <div
                   className="accordion-body">
                   {articleComments.map((comment) => {
-                    return
-                    (
+                    return (
                       <>
                         <article
                           key={comment.article_id}
