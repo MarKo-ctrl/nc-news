@@ -39,7 +39,7 @@ export const Home = () => {
   return (
     <main
       className='mx-1'>
-      <Container className='rounded bg-secondary'>
+      <Container className='c-1 rounded bg-secondary'>
         <p
           className='ms-2 fs-5 mb-0 fst-italic text-light'>
           Most recent entries:
@@ -78,16 +78,16 @@ export const Home = () => {
         </Carousel>
       </Container>
       <Container
-        className='mt-3'>
+        className='c-2 mt-3'>
         <p
-          className='ms-2 fs-5 mb-0 fst-italic'>
+          className='subtitle ms-2 fs-3 mb-0 fst-italic'>
           Most liked entries:
         </p>
         {articlesList.map((article) => {
           return (
             <Card
               key={`${article.article_id}_${article.author}`}
-              className='mb-2'>
+              className='article-card mb-2'>
               <Card.Body>
                 <Card.Title>
                   {article.title}

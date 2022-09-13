@@ -28,12 +28,12 @@ export const Articles = () => {
       {!slug ?
         <main>
           <Container
-            className='mt-3'>
+            className='c-2 mt-3'>
             {articlesList.map((article) => {
               return (
                 <Card
                   key={`${article.article_id}_${article.author}`}
-                  className='mb-2'>
+                  className='article-card mb-2'>
                   <Card.Body>
                     <Card.Title>
                       {article.title}
@@ -70,15 +70,16 @@ export const Articles = () => {
         <>
           <main>
             <Container
-              className='mt-3'>
-              <h2>
+              className='c-2 mt-3'>
+              <h2
+              className='subtitle'>
                 {toTitleCase(slug)} Articles
               </h2>
               {articlesList.map((article) => {
                 return (
                   <Card
                     key={`${article.article_id}_${article.author}`}
-                    className='mb-2'>
+                    className='article-card mb-2'>
                     <Card.Body>
                       <Card.Title>
                         {article.title}

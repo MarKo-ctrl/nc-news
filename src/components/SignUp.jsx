@@ -36,12 +36,15 @@ export const SignUp = () => {
         <>
           <main>
             <div
-              className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
-              <h2 className='mx-auto'>
+              className='d-flex flex-column mx-auto position-relative bg-light border reg-form-container'>
+              <h2
+                className='mx-auto'>
                 Register
               </h2>
-              <form id='registration_form'>
-                <div className='mb-3 mx-5'>
+              <form
+                id='registration_form'>
+                <div
+                  className='mb-3 mx-5'>
                   <label
                     htmlFor='name'
                     className='form-label'>
@@ -57,8 +60,13 @@ export const SignUp = () => {
                     required
                   />
                 </div>
-                <div className='mb-3 mx-5'>
-                  <label htmlFor='username' className='form-label'>Username:</label>
+                <div
+                  className='mb-3 mx-5'>
+                  <label
+                    htmlFor='username'
+                    className='form-label'>
+                    Username:
+                  </label>
                   <input
                     type='text'
                     className='form-control'
@@ -69,8 +77,13 @@ export const SignUp = () => {
                     required
                   />
                 </div>
-                <div className='mb-3 mx-5'>
-                  <label htmlFor='password' className='form-label'>Password:</label>
+                <div
+                  className='mb-3 mx-5'>
+                  <label
+                    htmlFor='password'
+                    className='form-label'>
+                    Password:
+                  </label>
                   <input
                     type='text'
                     className='form-control'
@@ -81,7 +94,8 @@ export const SignUp = () => {
                     required
                   />
                 </div>
-                <div className='mb-3 mx-5'>
+                <div
+                  className='mb-3 mx-5'>
                   <label
                     htmlFor='password'
                     className='form-label'>
@@ -97,7 +111,8 @@ export const SignUp = () => {
                     required
                   />
                 </div>
-                <div className='d-grid gap-2 w-50 mx-auto'>
+                <div
+                  className='d-grid gap-2 w-50 mx-auto'>
                   <button
                     type='submit'
                     className='btn btn-primary mb-3'

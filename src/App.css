@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
@@ -16,4 +16,35 @@ hr {
 
 main {
   margin-top: 5rem;
+}
+
+@media screen and (min-width: 576px) {
+  .c-1 {
+    width: min(90vw, 576px);
+  }
+
+  .c-2 {
+    width: max(90vw, 768px);
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+
+  .article-card {
+    width: min(95vw, 365px);
+  }
+  .subtitle {
+    flex-basis: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .login-form-container, .reg-form-container {
+    width: min(75vw, 550px);
+  }
+}
+@media screen and (max-width: 576px) {
+  .login-form-container, .reg-form-container{
+    width: 75vw;
+  }
 }

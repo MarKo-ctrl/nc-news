@@ -36,13 +36,18 @@ export const Login = () => {
     <>
       {!isSubmitted ?
         <>
-          <main className='mw-100'>
-            <div className='d-flex flex-column w-75 mx-auto position-relative bg-light border'>
-              <h2 className='mx-auto '>
+          <main
+            className='mw-100'>
+            <div
+              className='d-flex flex-column mx-auto position-relative bg-light border login-form-container'>
+              <h2
+                className='mx-auto '>
                 Login
               </h2>
-              <form id='login_form'>
-                <div className='mb-3 mx-5'>
+              <form
+                id='login_form'>
+                <div
+                  className='mb-3 mx-5'>
                   <label
                     htmlFor='username'
                     className='form-label'>
@@ -81,7 +86,8 @@ export const Login = () => {
                     className='btn btn-primary mb-3 w-60'
                     onClick={handleSubmit}>&lt; Login &gt;
                   </button>
-                  <div className='text-center small'>
+                  <div
+                    className='text-center small'>
                     Need an account?
                     <Link
                       to='/register'
