@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ThemeProvider from 'react-bootstrap/ThemeProvider'
 import { Home } from './components/Home'
 import { Nav } from './components/Nav';
 import { Articles } from './components/Articles';
@@ -15,9 +14,6 @@ function App() {
   const [user, setUser] = useState({});
 
   return (
-    <ThemeProvider
-      breakpoints={['xxl', 'xl', 'lg', 'sm', 'xs']}
-      minBreakpoint='xs'>
       <UserContext.Provider
         value={{ user, setUser }}>
         <div className='App'>
@@ -34,7 +30,6 @@ function App() {
           </Routes>
         </div>
       </UserContext.Provider>
-    </ThemeProvider>
   );
 }
 
