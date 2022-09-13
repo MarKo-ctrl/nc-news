@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 import ThemeProvider from 'react-bootstrap/ThemeProvider'
 import { Home } from './components/Home'
 import { Nav } from './components/Nav';
@@ -17,10 +17,10 @@ function App() {
   return (
     <ThemeProvider
       breakpoints={['xxl', 'xl', 'lg', 'sm', 'xs']}
-      minBreakpoint="xs">
+      minBreakpoint='xs'>
       <UserContext.Provider
         value={{ user, setUser }}>
-        <div className="App">
+        <div className='App'>
           <Nav />
           <Routes>
             <Route path='/' element={<Home />} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { LoadingSpinner } from './LoadingSpinner';
 import { getAllArticles } from '../utils/api';
 import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
@@ -54,9 +54,9 @@ export const Home = () => {
                 key={`${article.article_id}_${article.author}`}
                 className='border-top border-warning mb-1'>
                 <div
-                  className="d-flex flex-column justify-center pt-2">
+                  className='d-flex flex-column justify-center pt-2'>
                   <p
-                    className="w-75 mx-auto text-center text-light fs-4">
+                    className='w-75 mx-auto text-center text-light fs-4'>
                     {article.title}
                   </p>
                   <Card.Subtitle
@@ -68,7 +68,7 @@ export const Home = () => {
                   </Card.Subtitle>
                   <Link
                     to={`/article/${article.article_id}`}
-                    className="link-warning mx-auto pb-5 fs-6">
+                    className='link-warning mx-auto pb-5 fs-6'>
                     Read More
                   </Link>
                 </div>
@@ -93,7 +93,7 @@ export const Home = () => {
                   {article.title}
                 </Card.Title>
                 <Card.Subtitle
-                  className="d-flex flex-column text-muted">
+                  className='d-flex flex-column text-muted'>
                   <p
                     className='mb-1'>
                     <b>From:</b> {article.author}
@@ -107,12 +107,12 @@ export const Home = () => {
                 </Card.Text>
                 <Link
                   to={`/article/${article.article_id}`}
-                  className="card-link mx-auto pb-5">
+                  className='card-link mx-auto pb-5'>
                   Read More
                 </Link>
                 <Link
                   to={`/topics/${article.topic}`}
-                  className="card-link">
+                  className='card-link'>
                   {toTitleCase(article.topic)}
                 </Link>
               </Card.Body>

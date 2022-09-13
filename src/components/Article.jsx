@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from 'react-router-dom';
 import { LoadingSpinner } from './LoadingSpinner';
 import { Comments } from './Comments';
 import { getArticle, patchVote } from '../utils/api';
@@ -83,14 +83,14 @@ export const Article = () => {
           <p
             className='ms-2'>Found it interesting? Vote!</p>
           <button
-            type="button"
-            className="btn btn-info btn-sm ms-3"
+            type='button'
+            className='btn btn-info btn-sm ms-3'
             onClick={handleUpVotes}>
             Love it!
           </button>
           <button
-            type="button"
-            className="btn btn-outline-info btn-sm ms-3"
+            type='button'
+            className='btn btn-outline-info btn-sm ms-3'
             onClick={handleDownVotes}>
             Waste of time!</button>
           <Comments

@@ -15,8 +15,8 @@ export const DeleteComment = (props) => {
 
   return (<>{!isDeleted ?
     <button
-      type="submit"
-      className="btn btn-danger"
+      type='submit'
+      className='btn btn-danger'
       onClick={handleDelete}>
       Delete
     </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { getTopics } from '../utils/api';
 import { toTitleCase } from '../utils/helpers';
@@ -21,29 +21,29 @@ export const Nav = () => {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <div className="container-fluid">
+        className='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
+        <div className='container-fluid'>
           <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarToggler"
-            aria-controls="navbarToggler"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+            className='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarToggler'
+            aria-controls='navbarToggler'
+            aria-expanded='false'
+            aria-label='Toggle navigation'>
             <span
-              className="navbar-toggler-icon">
+              className='navbar-toggler-icon'>
             </span>
           </button>
           <div
-            className="collapse navbar-collapse"
-            id="navbarToggler">
+            className='collapse navbar-collapse'
+            id='navbarToggler'>
             <ul
               className='navbar-nav me-auto mb-2 mb-lg-0'>
               <li
                 className='nav-item fs-4'>
                 <Link
-                  to="/home"
+                  to='/home'
                   className='nav-link'>
                   Home
                 </Link>
@@ -51,23 +51,23 @@ export const Nav = () => {
               <li
                 className='nav-item dropdown fs-4'>
                 <Link
-                  to="#"
+                  to='#'
                   className='nav-link dropdown-toggle'
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  id='navbarDropdown'
+                  role='button'
+                  data-bs-toggle='dropdown'
+                  aria-expanded='false'
                   onClick={handleClick}>
                   Topics
                 </Link>
                 <ul
-                  className="dropdown-menu"
-                  aria-labelledby="navbarDropdown">
+                  className='dropdown-menu'
+                  aria-labelledby='navbarDropdown'>
                   {topics.map((topic) => {
                     return <li key={topic}>
                       <Link
                         to={`/topics/${topic}`}
-                        className="dropdown-item" >
+                        className='dropdown-item' >
                         {toTitleCase(topic)}
                       </Link>
                     </li>
@@ -76,7 +76,7 @@ export const Nav = () => {
               </li>
               <li className='nav-item  fs-4'>
                 <Link
-                  to="/articles"
+                  to='/articles'
                   className='nav-link'>
                   Articles
                 </Link>

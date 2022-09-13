@@ -48,20 +48,20 @@ export const Comments = () => {
       <section
         className='container mt-5'>
         <div
-          className="accordion">
+          className='accordion'>
           <div
-            className="row  d-flex justify-content-center">
+            className='row  d-flex justify-content-center'>
             <section
-              className="accordion-item">
+              className='accordion-item'>
               <h2
-                className="accordion-header mt-4 me-4" id="headingOne">
+                className='accordion-header mt-4 me-4' id='headingOne'>
                 <button
-                  className="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne">
+                  className='accordion-button'
+                  type='button'
+                  data-bs-toggle='collapse'
+                  data-bs-target='#collapseOne'
+                  aria-expanded='true'
+                  aria-controls='collapseOne'>
                   Comments ({articleComments.length})
                 </button>
               </h2>
@@ -75,25 +75,25 @@ export const Comments = () => {
                           Write your comment
                         </legend>
                         <div
-                          className="mb-2">
+                          className='mb-2'>
                           <label
-                            htmlFor="disabledTextInput"
-                            className="form-label">
+                            htmlFor='disabledTextInput'
+                            className='form-label'>
                             {user.username}
                           </label>
                           <input
-                            type="text"
-                            id="disabledTextInput"
-                            className="form-control"
-                            placeholder="What are your thoughts?"
+                            type='text'
+                            id='disabledTextInput'
+                            className='form-control'
+                            placeholder='What are your thoughts?'
                             value={commentBody}
                             onChange={(event) => setCommentBody(event.target.value)} />
                         </div>
                         {
                           !isPosted ?
                             <button
-                              type="submit"
-                              className="btn btn-primary">
+                              type='submit'
+                              className='btn btn-primary'>
                               Submit
                             </button>
                             :
@@ -107,20 +107,20 @@ export const Comments = () => {
                           Write your comment
                         </legend>
                         <div
-                          className="mb-3">
+                          className='mb-3'>
                           <label
-                            htmlFor="disabledTextInput"
-                            className="form-label">
+                            htmlFor='disabledTextInput'
+                            className='form-label'>
                           </label>
                           <input
-                            type="text"
-                            id="disabledTextInput"
-                            className="form-control"
-                            placeholder="You have to login before posting a comment" />
+                            type='text'
+                            id='disabledTextInput'
+                            className='form-control'
+                            placeholder='You have to login before posting a comment' />
                         </div>
                         <button
-                          type="submit"
-                          className="btn btn-primary">
+                          type='submit'
+                          className='btn btn-primary'>
                           Submit
                         </button>
                       </fieldset>
@@ -128,12 +128,12 @@ export const Comments = () => {
                 </form>
               </section>
               <div
-                id="collapseOne"
-                className="accordion-collapse collapse show"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample">
+                id='collapseOne'
+                className='accordion-collapse collapse show'
+                aria-labelledby='headingOne'
+                data-bs-parent='#accordionExample'>
                 <div
-                  className="accordion-body">
+                  className='accordion-body'>
                   {articleComments.map((comment) => {
                     return <article
                           key={`${comment.article_id}_${comment.author}_${comment.created_at}`}
