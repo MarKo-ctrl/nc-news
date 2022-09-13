@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { getAllArticles } from '../utils/api';
 import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
 import { LoadingSpinner } from './LoadingSpinner';
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
 
 
 export const Articles = () => {
@@ -25,75 +27,90 @@ export const Articles = () => {
     <>
       {!slug ?
         <main>
-          <ul>
+          <Container
+            className='mt-3'>
             {articlesList.map((article) => {
-              return <div
-                key={`${article.article_id}_${article.author}`}
-                className='card m-2 border-primary'>
-                <li
-                  className='card-body'>
-                  <h4
-                    className='card-title'>
-                    {article.title}
-                  </h4>
-                  <div
-                    className='d-sm-flex fs-6'>
-                    <h5
-                      className=''>
-                      From: {article.author}
-                    </h5>
-                    <h6
-                      className=''>
-                      {extractDate(article.created_at)} At {extractTime(article.created_at)}
-                    </h6>
-                  </div>
-                  <Link
-                    to={`/article/${article.article_id}`}
-                    className="card-link">
-                    Read More
-                  </Link>
-                  <Link
-                    to={`/topics/${article.topic}`}
-                    className="card-link">
-                    {toTitleCase(article.topic)}
-                  </Link>
-                </li>
-              </div>
+              return (
+                <Card
+                  key={`${article.article_id}_${article.author}`}
+                  className='mb-2'>
+                  <Card.Body>
+                    <Card.Title>
+                      {article.title}
+                    </Card.Title>
+                    <Card.Subtitle
+                      className="d-flex flex-column text-muted">
+                      <p
+                        className='mb-1'>
+                        <b>From:</b> {article.author}
+                      </p>
+                      <p>
+                        {extractDate(article.created_at)} <b>At</b> {extractTime(article.created_at)}
+                      </p>
+                    </Card.Subtitle>
+                    <Card.Text>
+                      {`${article.body.split('.', 1)}.`}
+                    </Card.Text>
+                    <Link
+                      to={`/article/${article.article_id}`}
+                      className="card-link mx-auto pb-5">
+                      Read More
+                    </Link>
+                    <Link
+                      to={`/topics/${article.topic}`}
+                      className="card-link">
+                      {toTitleCase(article.topic)}
+                    </Link>
+                  </Card.Body>
+                </Card>
+              );
             })}
-          </ul>
+          </Container>
         </main> :
         <>
           <main>
-
-            <h2>
-              {toTitleCase(slug)} Articles
-            </h2>
-            <ul>
-              <div className='card'>
-                {articlesList.map((article) => {
-                  return <li
-                    key={article.article_id}
-                    className='card-body'>
-                    <h4
-                      className='card-title'>
-                      {article.title}</h4>
-                    <h5
-                      className='card-subtitle mb-2 text-muted'>
-                      From: {article.author}
-                    </h5>
-                    <h6
-                      className='card-subtitle mb-2 text-muted'>
-                      {extractDate(article.created_at)} At {extractTime(article.created_at)}
-                    </h6>
-                    <Link
-                      to={`/article/${article.article_id}`}
-                      className="card-link">
-                      Read More
-                    </Link>
-                  </li>
-                })}
-              </div>
-            </ul>
+            <Container
+              className='mt-3'>
+              <h2>
+                {toTitleCase(slug)} Articles
+              </h2>
+              {articlesList.map((article) => {
+                return (
+                  <Card
+                    key={`${article.article_id}_${article.author}`}
+                    className='mb-2'>
+                    <Card.Body>
+                      <Card.Title>
+                        {article.title}
+                      </Card.Title>
+                      <Card.Subtitle
+                        className="d-flex flex-column text-muted">
+                        <p
+                          className='mb-1'>
+                          <b>From:</b> {article.author}
+                        </p>
+                        <p>
+                          {extractDate(article.created_at)} <b>At</b> {extractTime(article.created_at)}
+                        </p>
+                      </Card.Subtitle>
+                      <Card.Text>
+                        {`${article.body.split('.', 1)}.`}
+                      </Card.Text>
+                      <Link
+                        to={`/article/${article.article_id}`}
+                        className="card-link mx-auto pb-5">
+                        Read More
+                      </Link>
+                      <Link
+                        to={`/topics/${article.topic}`}
+                        className="card-link">
+                        {toTitleCase(article.topic)}
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
+            </Container>
           </main>
         </>
       }
