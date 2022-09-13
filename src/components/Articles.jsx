@@ -26,21 +26,27 @@ export const Articles = () => {
       {!slug ?
         <main>
           <ul>
-            <div className='card'>
-              {articlesList.map((article) => {
-                return <li key={article.article_id} className='card-body'>
+            {articlesList.map((article) => {
+              return <div
+                key={`${article.article_id}_${article.author}`}
+                className='card m-2 border-primary'>
+                <li
+                  className='card-body'>
                   <h4
                     className='card-title'>
                     {article.title}
                   </h4>
-                  <h5
-                    className='card-subtitle mb-2 text-muted'>
-                    From: {article.author}
-                  </h5>
-                  <h6
-                    className='card-subtitle mb-2 text-muted'>
-                    {extractDate(article.created_at)} At {extractTime(article.created_at)}
-                  </h6>
+                  <div
+                    className='d-sm-flex fs-6'>
+                    <h5
+                      className=''>
+                      From: {article.author}
+                    </h5>
+                    <h6
+                      className=''>
+                      {extractDate(article.created_at)} At {extractTime(article.created_at)}
+                    </h6>
+                  </div>
                   <Link
                     to={`/article/${article.article_id}`}
                     className="card-link">
@@ -52,8 +58,8 @@ export const Articles = () => {
                     {toTitleCase(article.topic)}
                   </Link>
                 </li>
-              })}
-            </div>
+              </div>
+            })}
           </ul>
         </main> :
         <>
