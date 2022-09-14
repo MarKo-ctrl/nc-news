@@ -9,6 +9,7 @@ import { Login } from './components/Login';
 import { UserContext } from './context/User';
 import { UserProfile } from './components/UserProfile'
 import { SignUp } from './components/SignUp';
+import { ErrorPage } from './components/ErrorPage';
 
 function App() {
   const [user, setUser] = useState({});
@@ -27,6 +28,7 @@ function App() {
             <Route path='/register' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route path='/user/profile' element={<UserProfile />} />
+            <Route path='*' element={<ErrorPage />}/>
           </Routes>
         </div>
       </UserContext.Provider>

@@ -2,19 +2,22 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner } from './LoadingSpinner';
-import { getAllArticles } from '../utils/api';
-import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
 import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+import { ErrorPage } from './ErrorPage';
+import { getAllArticles } from '../utils/api';
+import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
 
 export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesList, setArticlesList] = useState([]);
   const [latestArticles, setLatestArticles] = useState([]);
   const [index, setIndex] = useState(0);
+  const [error, setError] = useState(null);
 
-  const handleSelect = (selectedIndex, e) => {
+  const handleSelect = (selectedIndex, event) => {
+    event.preventDefault();
     setIndex(selectedIndex);
   };
 
@@ -33,8 +36,12 @@ export const Home = () => {
         setArticlesList(articles.filter(a => a.votes > 1))
         setIsLoading(false)
       })
+      .catch((err) => {
+        setError(err);
+      })
   }, [])
 
+  if (error) return <ErrorPage value={error}/>;
   if (isLoading) return <LoadingSpinner />
   return (
     <main

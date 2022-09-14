@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
+import { ErrorPage } from './ErrorPage';
+import { LoadingSpinner } from './LoadingSpinner';
 import { UserContext } from '../context/User';
 import { signup } from '../utils/api';
-import { LoadingSpinner } from './LoadingSpinner';
 
 export const SignUp = () => {
   const [input, setInput] = useState({})
@@ -18,17 +19,15 @@ export const SignUp = () => {
 
     signup(input)
       .then((newUser) => {
-        setIsLoading(false)
-        console.log(newUser)
-
-        if (newUser) {
-          setUser(newUser);
-        } else {
-          setError({ errMsg: 'something went wrong' })
-        }
+        setIsLoading(false);
+        setUser(newUser);
+      })
+      .catch((err) =>{
+        setError(err);
       })
   }
 
+  if (error) return <ErrorPage value={error} />;
   if (isLoading) return <LoadingSpinner />;
   return (
     <>

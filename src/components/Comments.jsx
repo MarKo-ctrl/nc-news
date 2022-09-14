@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { ErrorPage } from './ErrorPage';
 import { CommentSpinner } from './CommentSpinner';
 import { getComments, postComment } from '../utils/api';
 import { extractDate } from '../utils/helpers';
@@ -8,7 +9,7 @@ import { DeleteComment } from './DeleteComment';
 
 export const Comments = () => {
   const [articleComments, setComments] = useState([])
-  const [err, setErr] = useState(null)
+  const [error, setError] = useState(null)
   const { article_id } = useParams();
   const { user } = useContext(UserContext);
   const [commentBody, setCommentBody] = useState('')
@@ -20,8 +21,8 @@ export const Comments = () => {
       .then((comments) => {
         setComments(comments)
       })
-      .catch((error) => {
-        setErr(error)
+      .catch((err) => {
+        setError(err)
       })
   }, [article_id])
 
@@ -36,13 +37,13 @@ export const Comments = () => {
         setPosted(false)
         setComments([...articleComments, postedComment])
       })
-      .catch((error) => {
-        console.dir(error);
+      .catch((err) => {
+        setError(err)
       })
   }
 
 
-  if (err) return <p className='error'>No comments yet!</p>
+  if (error) return <ErrorPage value={error}/>;
   return (
     <>
       <section
@@ -136,26 +137,26 @@ export const Comments = () => {
                   className='accordion-body'>
                   {articleComments.map((comment) => {
                     return <article
-                          key={`${comment.article_id}_${comment.author}_${comment.created_at}`}
-                          className='d-flex card p-3 mt-3'>
-                          <h5>
-                            {comment.author}
-                          </h5>
-                          <p>
-                            {extractDate(comment.created_at)}
-                          </p>
-                          <p>
-                            {comment.body}
-                          </p>
-                          {
-                            user.username === comment.author ?
-                              <DeleteComment
-                                comment_id={comment.comment_id}
-                              />
-                              :
-                              null
-                          }
-                        </article>
+                      key={`${comment.article_id}_${comment.author}_${comment.created_at}`}
+                      className='d-flex card p-3 mt-3'>
+                      <h5>
+                        {comment.author}
+                      </h5>
+                      <p>
+                        {extractDate(comment.created_at)}
+                      </p>
+                      <p>
+                        {comment.body}
+                      </p>
+                      {
+                        user.username === comment.author ?
+                          <DeleteComment
+                            comment_id={comment.comment_id}
+                          />
+                          :
+                          null
+                      }
+                    </article>
                   })}
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-// import ReactDOM from 'react-dom'
-// import { useNavigate } from 'react-router-dom';
+import { ErrorPage } from './ErrorPage';
 import { UserContext } from '../context/User';
 import { signin } from '../utils/api';
 import { LoadingSpinner } from './LoadingSpinner';
@@ -9,7 +8,7 @@ import { LoadingSpinner } from './LoadingSpinner';
 export const Login = () => {
   const [input, setInput] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [error, setError] = useState({})
+  const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
@@ -22,15 +21,14 @@ export const Login = () => {
     signin(input)
       .then((validUser) => {
         setIsLoading(false)
-
-        if (validUser) {
-          setUser(validUser);
-        } else {
-          setError({ errMsg: 'invalid username or password' })
-        }
+        setUser(validUser);
+      })
+      .catch((err) => {
+        setError(err)
       })
   }
 
+  if (error) return <ErrorPage value={error} />;
   if (isLoading) return <LoadingSpinner />;
   return (
     <>

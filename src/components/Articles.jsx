@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getAllArticles } from '../utils/api';
-import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
 import { LoadingSpinner } from './LoadingSpinner';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+import { ErrorPage } from './ErrorPage';
+import { getAllArticles } from '../utils/api';
+import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
 
 
 export const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesList, setArticlesList] = useState([]);
   const { slug } = useParams()
-
+const [error, setError] = useState(null);
 
   useEffect(() => {
     getAllArticles(slug)
@@ -20,8 +21,13 @@ export const Articles = () => {
         setArticlesList(articles)
         setIsLoading(false)
       })
+      .catch((err) => {
+        setError(err.response.data.msg)
+      })
   }, [slug])
 
+  
+  if (error) return <ErrorPage value={error}/>
   if (isLoading) return <LoadingSpinner />
   return (
     <>

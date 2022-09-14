@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { LoadingSpinner } from './LoadingSpinner';
+import { ErrorPage } from './ErrorPage';
 import { Comments } from './Comments';
 import { getArticle, patchVote } from '../utils/api';
 import { toTitleCase, extractDate } from '../utils/helpers';
@@ -11,12 +12,16 @@ export const Article = () => {
   const [currVotes, setVotes] = useState(0);
   const { article_id } = useParams();
   const [voteErr, setVoteError] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getArticle(article_id)
       .then((article) => {
         setArticleBody(article)
         setIsLoading(false)
+      })
+      .catch((err) => {
+        setError(err.response.data.msg)
       })
   }, [article_id])
 
@@ -40,7 +45,8 @@ export const Article = () => {
       })
   }
 
-  if (voteErr) return <p className='error'>{voteErr}</p>
+  if (voteErr) return <ErrorPage value={voteErr}/>;
+  if (error) return <ErrorPage value={error}/>;
   return (
     <>
       {isLoading ?
