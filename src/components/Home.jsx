@@ -17,7 +17,6 @@ export const Home = () => {
   const [error, setError] = useState(null);
 
   const handleSelect = (selectedIndex, event) => {
-    event.preventDefault();
     setIndex(selectedIndex);
   };
 

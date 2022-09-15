@@ -5,6 +5,7 @@ import { ErrorPage } from './ErrorPage';
 import { Comments } from './Comments';
 import { getArticle, patchVote } from '../utils/api';
 import { toTitleCase, extractDate } from '../utils/helpers';
+import { Container, Row, Col } from 'react-bootstrap';
 
 export const Article = () => {
   const [articleObj, setArticleBody] = useState({});
@@ -45,8 +46,8 @@ export const Article = () => {
       })
   }
 
-  if (voteErr) return <ErrorPage value={voteErr}/>;
-  if (error) return <ErrorPage value={error}/>;
+  if (voteErr) return <ErrorPage value={voteErr} />;
+  if (error) return <ErrorPage value={error} />;
   return (
     <>
       {isLoading ?
@@ -54,54 +55,70 @@ export const Article = () => {
           key={articleObj.article_id}
         />
         :
-        <main
-          className='col-md-12'>
-          <h4
-            className='ms-3'>
-            From
-            <Link
-              to={`/topics/${articleObj.topic}`}
-              className='pb-4 mb-4 fst-italic border-bottom'>
-              {toTitleCase(articleObj.topic)}
-            </Link>
-          </h4>
-          <article
-            className='blog-post'>
-            <h2
-              className='h2'>
+        <main>
+          <Container>
+            <Col
+              className='fs-1'>
               {articleObj.title}
-            </h2>
-            <p
-              className='blog-post-meta mx-3'>
-              {extractDate(articleObj.created_at)} by {toTitleCase(articleObj.author)}
-            </p>
-            <div
-              className='blog-post-meta mx-3 text-end'>
-              Was interesting for : {currVotes + articleObj.votes}
-            </div>
-            <hr />
-            <p
-              className='ms-3'>
+            </Col>
+            <Row
+            className=''>
+              <Col
+              className='align-self-center'>
+                <span
+                  className='text-secondary'>
+                  From </span>
+                <Link
+                  to={`/topics/${articleObj.topic}`}
+                  className='fst-italic text-warning text-decoration-none'>
+                  {toTitleCase(articleObj.topic)}
+                </Link>
+              </Col>
+              <Col xs={4}
+                className='text-secondary align-self-center'>
+                {extractDate(articleObj.created_at)} by  <span
+                  className="text-warning">
+                  {toTitleCase(articleObj.author)}
+                </span>
+              </Col>
+              <Col>
+                Was interesting for :
+                <span
+                  className='text-warning align-self-center'>
+                  {currVotes + articleObj.votes}
+                </span>
+              </Col>
+            </Row>
+            <Row
+              className='my-5'>
+              <Col>
               {articleObj.body}
-            </p>
-          </article>
-          <hr />
-          <p
-            className='ms-2'>Found it interesting? Vote!</p>
-          <button
-            type='button'
-            className='btn btn-info btn-sm ms-3'
-            onClick={handleUpVotes}>
-            Love it!
-          </button>
-          <button
-            type='button'
-            className='btn btn-outline-info btn-sm ms-3'
-            onClick={handleDownVotes}>
-            Waste of time!</button>
-          <Comments
-            key={articleObj.article_id}
-          />
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                className='text-secondary fs-6 fst-italic'>
+                Found it interesting? Vote!
+              </Col>
+              <Col>
+                <button
+                  type='button'
+                  className='btn btn-secondary btn-sm mb-1 me-1 text-warning'
+                  onClick={handleUpVotes}>
+                  Love it!
+                </button>
+                <button
+                  type='button'
+                  className='btn btn-outline-secondary btn-sm text-danger mb-1'
+                  onClick={handleDownVotes}>
+                  Waste of time!
+                </button>
+              </Col>
+            </Row>
+            <Comments
+              key={articleObj.article_id}
+            />
+          </Container>
         </main>
       }
     </>

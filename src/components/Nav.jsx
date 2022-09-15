@@ -87,7 +87,7 @@ export const Nav = () => {
                 <li className='nav-item'>
                   <Link
                     to='/login'
-                    className='nav-link fs-6'>
+                    className='nav-link fs-6 text-decoration-none text-warning'>
                     Login / Register
                   </Link>
                 </li>
