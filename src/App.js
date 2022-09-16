@@ -28,7 +28,7 @@ function App() {
             <Route path='/register' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route path='/user/profile' element={<UserProfile />} />
-            <Route path='*' element={<ErrorPage />}/>
+            <Route path='*' element={<ErrorPage value={'The requested page does not exist'}/>}/>
           </Routes>
         </div>
       </UserContext.Provider>
