@@ -10,7 +10,7 @@ const handyNews = axios.create({
 export const getAllArticles = (topic) => {
   return handyNews.get(`/articles/`, { params: { topic } })
     .then((articles) => {
-      return articles.data;
+      return articles;
     })
 }
 
