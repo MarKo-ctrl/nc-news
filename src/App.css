@@ -41,6 +41,7 @@ main {
 
   .login-form-container, .reg-form-container {
     width: min(75vw, 550px);
+    margin:0 auto !important;
   }
 }
 @media screen and (max-width: 576px) {
