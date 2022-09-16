@@ -7,7 +7,6 @@ import { signup } from '../utils/api';
 
 export const SignUp = () => {
   const [input, setInput] = useState({})
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
@@ -15,20 +14,23 @@ export const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsSubmitted(true);
     setIsLoading(true)
 
     signup(input)
-      .then((newUser) => {
+      .then((res) => {
         setIsLoading(false);
-        setUser(newUser);
+        if (res.statusText === 'OK'){
+          setUser(res.data[0]);
+        } else {
+          throw Error()
+        }
       })
       .catch((err) => {
-        setError(err);
+        setIsLoading(false);
+        setError(err.response.data.msg);
       })
   }
 
-  if (error) return <ErrorPage value={error} />;
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
@@ -38,7 +40,7 @@ export const SignUp = () => {
           Register
         </p>
         <Form
-          className=' bg-light border mx-5'
+          className='reg-form-container bg-light border mx-5'
           onSubmit={handleSubmit}>
           <Form.Group
             className='mx-2'
@@ -50,9 +52,10 @@ export const SignUp = () => {
             <Form.Control
               type='text'
               name='name'
-              placeholder='Your Name'
+              placeholder='Your full name'
               onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}>
             </Form.Control>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
           <Form.Group
             className='mx-2'
@@ -64,7 +67,7 @@ export const SignUp = () => {
             <Form.Control
               type='text'
               name='username'
-              placeholder='Choose Username'
+              placeholder='Choose username'
               onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}>
             </Form.Control>
           </Form.Group>
@@ -78,17 +81,52 @@ export const SignUp = () => {
             <Form.Control
               type='password'
               name='password'
-              placeholder='Your Password'
+              placeholder='Your password'
               onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}>
             </Form.Control>
           </Form.Group>
-          <div className="d-flex">
-            <Button
-              type='submit'
-              className='btn btn-secondary my-3 mx-auto text-warning'
-              onClick={handleSubmit}>
-              &lt; Register &gt;
-            </Button>
+          <Form.Group
+            className='mx-2'
+            controlId='registration_form'>
+            <Form.Label
+              className='text-secondary mt-2'>
+              Confirm Password:
+            </Form.Label>
+            <Form.Control
+              type='password'
+              name='confPassword'
+              placeholder='Re-type your password'
+              onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}>
+            </Form.Control>
+          </Form.Group>
+          <div className="d-flex flex-column">
+            {!input.name &&
+              !input.username &&
+              !input.password &&
+              input.password === input.confPassword ?
+              <Button
+                type='submit'
+                className='btn btn-secondary my-3 mx-auto text-warning'
+                disabled>
+                &lt; Register &gt;
+              </Button>
+              :
+              <Button
+                type='submit'
+                className='btn btn-secondary my-3 mx-auto text-warning'
+                onClick={handleSubmit}>
+                &lt; Register &gt;
+              </Button>}
+              {Object.keys(user).length !== 0 ?
+              <p
+                className='mx-auto bg-success text-warning rounded p-2'>
+                You have successfuly logged in <strong>{user.username}</strong>
+              </p>
+              : error !== null ?
+                <ErrorPage
+                  value={error} />
+                : null
+            }
           </div>
         </Form>
       </main>

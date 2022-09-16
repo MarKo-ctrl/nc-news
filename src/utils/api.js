@@ -4,7 +4,7 @@ import axios from 'axios';
 const handyNews = axios.create({
   // baseURL: 'https://handy-news.herokuapp.com/api'
   baseURL: 'http://127.0.0.1:9090/api/'
-  
+
 })
 
 export const getAllArticles = (topic) => {
@@ -44,17 +44,18 @@ export const getComments = (article_id) => {
 
 export const signin = (user) => {
   return handyNews.post('/users/signin', user)
-    .then((user) => {
-      return user.data[0]
+    .then((res) => {
+      delete res.data[0].password
+      return res
     })
 }
 
 export const signup = (user) => {
   return handyNews.post('/users/signup', user)
-  .then((user) => {
-    delete user.data[0].password
-    return user.data[0]
-  })
+    .then((res) => {
+      delete res.data[0].password
+      return res
+    })
 }
 
 export const postComment = (article_id, comment) => {
