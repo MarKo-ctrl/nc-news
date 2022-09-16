@@ -2,8 +2,8 @@ import axios from 'axios';
 
 
 const handyNews = axios.create({
-  // baseURL: "https://handy-news.herokuapp.com/api"
-  baseURL: "http://127.0.0.1:9090/api/"
+  // baseURL: 'https://handy-news.herokuapp.com/api'
+  baseURL: 'http://127.0.0.1:9090/api/'
   
 })
 
@@ -15,7 +15,7 @@ export const getAllArticles = (topic) => {
 }
 
 export const getTopics = () => {
-  return handyNews.get("/topics")
+  return handyNews.get('/topics')
     .then((topics) => {
       return topics.data.topics
     })

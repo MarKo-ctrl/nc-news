@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Link } from "react-router-dom";
-// import ReactDOM from 'react-dom'
-// import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import {  Form, Button } from 'react-bootstrap';
+import { ErrorPage } from './ErrorPage';
 import { UserContext } from '../context/User';
 import { signin } from '../utils/api';
 import { LoadingSpinner } from './LoadingSpinner';
@@ -9,7 +9,7 @@ import { LoadingSpinner } from './LoadingSpinner';
 export const Login = () => {
   const [input, setInput] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [error, setError] = useState({})
+  const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
@@ -22,15 +22,14 @@ export const Login = () => {
     signin(input)
       .then((validUser) => {
         setIsLoading(false)
-
-        if (validUser) {
-          setUser(validUser);
-        } else {
-          setError({ errMsg: 'invalid username or password' })
-        }
+        setUser(validUser);
+      })
+      .catch((err) => {
+        setError(err)
       })
   }
 
+  if (error) return <ErrorPage value={error} />;
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
@@ -38,66 +37,52 @@ export const Login = () => {
         <>
           <main
             className='mw-100'>
-            <div
-              className='d-flex flex-column mx-auto position-relative bg-light border login-form-container'>
-              <h2
-                className='mx-auto '>
-                Login
-              </h2>
-              <form
-                id='login_form'>
-                <div
-                  className='mb-3 mx-5'>
-                  <label
-                    htmlFor='username'
-                    className='form-label'>
-                    Username:
-                  </label>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='username'
-                    name='username'
-                    placeholder='Your Username'
-                    onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
-                    required
-                  />
-                </div>
-                <div
-                  className='mb-3 mx-5'>
-                  <label
-                    htmlFor='password'
-                    className='form-label'>
-                    Password:</label>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='password'
-                    name='password'
-                    placeholder='Your Password'
-                    onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}
-                    required
-                  />
-                </div>
-                <div
-                  className='d-grid gap-1 w-50 mx-auto'>
-                  <button
-                    type='submit'
-                    className='btn btn-primary mb-3 w-60'
-                    onClick={handleSubmit}>&lt; Login &gt;
-                  </button>
-                  <div
-                    className='text-center small'>
-                    Need an account?
-                    <Link
-                      to='/register'
-                      className='nav-link'>
-                      Sign up here
-                    </Link>
-                  </div>
-                </div>
-              </form>
-            </div>
+            <main>
+        <p
+          className='fs-2 text-center'>
+          Login
+        </p>
+        <Form
+          className=' bg-light border mx-5'
+          onSubmit={handleSubmit}>
+          <Form.Group
+            className='mx-2'
+            controlId='foemUsername'>
+            <Form.Label
+              className='text-secondary mt-2'>
+              Username:
+            </Form.Label>
+            <Form.Control
+              type='text'
+              name='username'
+              placeholder='Choose Username'
+              onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group
+            className='mx-2'
+            controlId='registration_form'>
+            <Form.Label
+              className='text-secondary mt-2'>
+              Password:
+            </Form.Label>
+            <Form.Control
+              type='password'
+              name='password'
+              placeholder='Your Password'
+              onChange={(event) => setInput({ ...input, [event.target.name]: event.target.value })}>
+            </Form.Control>
+          </Form.Group>
+          <div className="d-flex">
+            <Button
+              type='submit'
+              className='btn btn-secondary my-3 mx-auto text-warning'
+              onClick={handleSubmit}>
+              &lt; Login &gt;
+            </Button>
+          </div>
+        </Form>
+      </main>
           </main>
         </>
         :
@@ -105,9 +90,7 @@ export const Login = () => {
           <main>
             <p
               className='success-msg'>
-              You have successfuly logged in
-              <strong>{user.username}
-              </strong>
+              You have successfuly logged in <strong>{user.username}</strong>
             </p>
           </main>
           :
@@ -118,5 +101,6 @@ export const Login = () => {
             </p>
           </main>
       }
-    </>)
+    </>
+  )
 }
