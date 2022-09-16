@@ -2,8 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
-import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
+import { Container, Card, Dropdown, DropdownButton } from 'react-bootstrap';
 import { ErrorPage } from './ErrorPage';
 import { getAllArticles } from '../utils/api';
 import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
@@ -13,6 +12,7 @@ export const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesList, setArticlesList] = useState([]);
   const { slug } = useParams()
+  const [sort, setSort] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -31,12 +31,32 @@ export const Articles = () => {
       })
   }, [slug])
 
+  const handleSorting = (event) => {
+    event.preventDefault()
+  }
 
   if (isLoading) return <LoadingSpinner />
   return (
     <>
       {!slug ?
         <main>
+          <h2
+            className='subtitle mb-3'>
+            All Articles
+          </h2>
+
+
+          <DropdownButton
+            drop='up'
+            variant='secondary'
+            title='Sort By'>
+            {['Title', 'Author', 'Date', 'Comment Number'].map((sortKey) => {
+              return <Dropdown.Item>{`${sortKey}`}</Dropdown.Item>
+            })
+            }
+          </DropdownButton>
+
+
           <Container
             className='c-2 mt-3'>
             {articlesList.map((article) => {
