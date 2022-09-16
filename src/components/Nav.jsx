@@ -96,7 +96,7 @@ export const Nav = () => {
                   <li className='nav-item'>
                     <Link
                       to='/user/profile'
-                      className='nav-link '>
+                      className='nav-link text-warning'>
                       Profile
                     </Link>
                   </li>
