@@ -13,6 +13,7 @@ export const Articles = () => {
   const [articlesList, setArticlesList] = useState([]);
   const { slug } = useParams()
   const [sort, setSort] = useState(null);
+  const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -45,17 +46,31 @@ export const Articles = () => {
             All Articles
           </h2>
 
-
           <DropdownButton
-            drop='up'
+            drop='end'
             variant='secondary'
-            title='Sort By'>
-            {['Title', 'Author', 'Date', 'Comment Number'].map((sortKey) => {
-              return <Dropdown.Item>{`${sortKey}`}</Dropdown.Item>
+            title='Sort By'
+            onClick={handleSorting}>
+            {['Title (A to Z)',
+              'Title (Z to A)',
+              'Author',
+              'Author',
+              'Date',
+              'Date',
+              'Comment Number (HIGH to LOW)',
+              'Comment Number (LOW to HIGH)',
+              'Votes (HIGH to LOW)',
+              'Votes (LOW to HIGH)'
+            ].map((sortKey) => {
+              return (
+                <Dropdown.Item
+                  key={`${sortKey}`}>
+                  {`${sortKey}`}
+                </Dropdown.Item>
+              )
             })
             }
           </DropdownButton>
-
 
           <Container
             className='c-2 mt-3'>
@@ -83,7 +98,7 @@ export const Articles = () => {
                     </Card.Text>
                     <Link
                       to={`/article/${article.article_id}`}
-                      className='card-link mx-auto pb-5 text-decoration-none text-warning'>
+                      className='card-link mx-auto text-decoration-none text-warning'>
                       Read More
                     </Link>
                     <Link
@@ -91,6 +106,10 @@ export const Articles = () => {
                       className='card-link text-decoration-none text-warning'>
                       {toTitleCase(article.topic)}
                     </Link>
+                    <div
+                      className='d-block text-secondary position-absolute bottom-0 end-0 me-2 mb-2 border border-warning rounded p-1'>
+                      <b>Votes:</b> {article.votes}
+                    </div>
                   </Card.Body>
                 </Card>
               );
