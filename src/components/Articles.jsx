@@ -12,8 +12,8 @@ export const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesList, setArticlesList] = useState([]);
   const { slug } = useParams()
-  const [sort, setSort] = useState(null);
-  const [order, setOrder] = useState(null);
+  // const [sort, setSort] = useState(null);
+  // const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -34,6 +34,66 @@ export const Articles = () => {
 
   const handleSorting = (event) => {
     event.preventDefault()
+    let sort_by, order = '';
+    switch (event.target.text) {
+      case 'Title (A to Z)':
+        sort_by = 'title';
+        order = 'asc'
+        break;
+      case 'Title (Z to A)':
+        sort_by = 'title';
+        order = 'desc'
+        break;
+      case 'Author (A to Z)':
+        sort_by = 'author';
+        order = 'asc'
+        break;
+      case 'Author (Z to A)':
+        sort_by = 'author';
+        order = 'desc'
+        break;
+      case 'Date (A to Z)':
+        sort_by = 'created_at';
+        order = 'asc'
+        break;
+      case 'Date (Z to A)':
+        sort_by = 'created_at';
+        order = 'desc'
+        break;
+      case 'Comment Number (LOW to HIGH)':
+        sort_by = 'comment_count';
+        order = 'asc'
+        break;
+      case 'Comment Number (HIGH to LOW)':
+        sort_by = 'comment_count';
+        order = 'desc'
+        break;
+      case 'Votes (LOW to HIGH)':
+        sort_by = 'votes';
+        order = 'asc'
+        break;
+      case 'Votes (HIGH to LOW)':
+        sort_by = 'votes';
+        order = 'desc'
+        break;
+      default:
+        sort_by = 'title';
+        order = 'asc'
+    }
+
+    getAllArticles(undefined, sort_by, order)
+      .then((articles) => {
+        setIsLoading(false)
+        if (articles.statusText === 'OK') {
+          setArticlesList(articles.data)
+        } else {
+          throw Error()
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        setError(err.response.data.msg)
+      })
   }
 
   if (isLoading) return <LoadingSpinner />
@@ -49,22 +109,22 @@ export const Articles = () => {
           <DropdownButton
             drop='end'
             variant='secondary'
-            title='Sort By'
-            onClick={handleSorting}>
+            title='Sort By'>
             {['Title (A to Z)',
               'Title (Z to A)',
-              'Author',
-              'Author',
-              'Date',
-              'Date',
-              'Comment Number (HIGH to LOW)',
+              'Author (A to Z)',
+              'Author (Z to A)',
+              'Date (A to Z)',
+              'Date (Z to A)',
               'Comment Number (LOW to HIGH)',
-              'Votes (HIGH to LOW)',
-              'Votes (LOW to HIGH)'
+              'Comment Number (HIGH to LOW)',
+              'Votes (LOW to HIGH)',
+              'Votes (HIGH to LOW)'
             ].map((sortKey) => {
               return (
                 <Dropdown.Item
-                  key={`${sortKey}`}>
+                  key={`${sortKey}`}
+                  onClick={handleSorting}>
                   {`${sortKey}`}
                 </Dropdown.Item>
               )
@@ -84,14 +144,18 @@ export const Articles = () => {
                       {article.title}
                     </Card.Title>
                     <Card.Subtitle
-                      className='d-flex flex-column text-muted'>
-                      <p
-                        className='mb-1'>
+                      className='d-flex flex-column text-muted my-3'>
+                      <p 
+                      className='mb-0 py-1'>
                         <b>From:</b> {article.author}
                       </p>
-                      <p>
+                      <p
+                      className='mb-0'>
                         {extractDate(article.created_at)} <b>At</b> {extractTime(article.created_at)}
                       </p>
+                      <p 
+                      className='mb-0'>
+                        Comments: {article.comment_count}</p>
                     </Card.Subtitle>
                     <Card.Text>
                       {`${article.body.split('.', 1)}.`}
