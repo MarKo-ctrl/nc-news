@@ -61,13 +61,14 @@ export const Nav = () => {
                   Topics
                 </Link>
                 <ul
-                  className='dropdown-menu'
+                  className='dropdown-menu bg-warning '
                   aria-labelledby='navbarDropdown'>
                   {topics.map((topic) => {
-                    return <li key={topic}>
+                    return <li
+                      key={topic}>
                       <Link
                         to={`/topics/${topic}`}
-                        className='dropdown-item' >
+                        className='dropdown-item text-secondary' >
                         {toTitleCase(topic)}
                       </Link>
                     </li>

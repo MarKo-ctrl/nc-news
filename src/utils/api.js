@@ -7,10 +7,10 @@ const handyNews = axios.create({
 
 })
 
-export const getAllArticles = (topic) => {
-  return handyNews.get(`/articles/`, { params: { topic } })
+export const getAllArticles = (topic, sort_by, order, page) => {
+  return handyNews.get(`/articles/`, { params: { topic, sort_by, order, page } })
     .then((articles) => {
-      return articles.data;
+      return articles;
     })
 }
 

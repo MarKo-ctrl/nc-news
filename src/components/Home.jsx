@@ -16,31 +16,45 @@ export const Home = () => {
   const [index, setIndex] = useState(0);
   const [error, setError] = useState(null);
 
-  const handleSelect = (selectedIndex, event) => {
+  const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
   useEffect(() => {
     getAllArticles()
       .then((articles) => {
-        const articlesCopy = [...articles];
-        let recentArticles = [];
-
-        for (let i = 0; i < 3; i++) {
-          let latestArticleDate = new Date(Math.max(...articlesCopy.map(a => new Date(a.created_at))));
-          recentArticles = [...recentArticles, articlesCopy.filter(a => (new Date(a.created_at)).toString() === latestArticleDate.toString())[0]];
-          articlesCopy.splice(articlesCopy.findIndex(a => (new Date(a.created_at)).toString() === latestArticleDate.toString()), 1);
-        }
-        setLatestArticles(recentArticles)
-        setArticlesList(articles.filter(a => a.votes > 1))
         setIsLoading(false)
+        // make a copy of the data array
+        if (articles.statusText === 'OK') {
+          const articlesCopy = [...articles.data];
+
+          // find the 3 most recent articles
+          let recentArticles = [];
+          for (let i = 0; i < 3; i++) {
+            // find the latest article date
+            let latestArticleDate = new Date(Math.max(...articlesCopy.map(a => new Date(a.created_at))));
+            // retrieve the most recent article by comparing to the latest date
+            recentArticles = [...recentArticles, articlesCopy.filter(a => (new Date(a.created_at)).toString() === latestArticleDate.toString())[0]];
+            // delete the most recent article, ..and repeat to find the next most recent article
+            articlesCopy.splice(articlesCopy.findIndex(a => (new Date(a.created_at)).toString() === latestArticleDate.toString()), 1);
+          }
+          setLatestArticles(recentArticles);
+          setArticlesList(articles.data.filter(a => a.votes > 1));
+        } else {
+          throw Error();
+        }
       })
       .catch((err) => {
-        setError(err);
+        setIsLoading(false)
+        if (err.message === 'Network Error') {
+          setError(err.message)
+        } else {
+          setError(err.response.data.msg);
+        }
       })
   }, [])
 
-  if (error) return <ErrorPage value={error}/>;
+  if (error) return <ErrorPage value={error} />;
   if (isLoading) return <LoadingSpinner />
   return (
     <main
@@ -66,10 +80,10 @@ export const Home = () => {
                     {article.title}
                   </p>
                   <Card.Subtitle
-                  className='p-0 m-0'>
+                    className='p-0 m-0'>
                     <p
-                    className='fs-6 fst-italic text-warning text-center m-0 p-0'>
-                    {extractDate(article.created_at)}
+                      className='fs-6 fst-italic text-warning text-center m-0 p-0'>
+                      {extractDate(article.created_at)}
                     </p>
                   </Card.Subtitle>
                   <Link
@@ -86,14 +100,14 @@ export const Home = () => {
       <Container
         className='c-2 mt-3'>
         <p
-          className='subtitle ms-2 fs-3 mb-0 fst-italic'>
+          className='subtitle ms-2 fs-3 mb-2 fst-italic'>
           Most liked entries:
         </p>
         {articlesList.map((article) => {
           return (
             <Card
               key={`${article.article_id}_${article.author}`}
-              className='article-card mb-2'>
+              className='article-card bg-light mb-2'>
               <Card.Body>
                 <Card.Title>
                   {article.title}
@@ -113,12 +127,12 @@ export const Home = () => {
                 </Card.Text>
                 <Link
                   to={`/article/${article.article_id}`}
-                  className='card-link mx-auto pb-5'>
+                  className='card-link mx-auto pb-5 text-decoration-none text-warning'>
                   Read More
                 </Link>
                 <Link
                   to={`/topics/${article.topic}`}
-                  className='card-link'>
+                  className='card-link text-decoration-none text-warning'>
                   {toTitleCase(article.topic)}
                 </Link>
               </Card.Body>
