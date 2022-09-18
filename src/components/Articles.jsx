@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
-import { Container, Card, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Card, Dropdown, DropdownButton, Button } from 'react-bootstrap';
 import { ErrorPage } from './ErrorPage';
 import { getAllArticles } from '../utils/api';
 import { toTitleCase, extractDate, extractTime } from '../utils/helpers';
@@ -12,12 +12,11 @@ export const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesList, setArticlesList] = useState([]);
   const { slug } = useParams()
-  // const [sort, setSort] = useState(null);
-  // const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getAllArticles(slug)
+    getAllArticles(slug, undefined, undefined, page)
       .then((articles) => {
         setIsLoading(false)
         if (articles.statusText === 'OK') {
@@ -30,8 +29,9 @@ export const Articles = () => {
         setIsLoading(false)
         setError(err.response.data.msg)
       })
-  }, [slug])
+  }, [slug, page])
 
+  console.log(articlesList.length)
   const handleSorting = (event) => {
     event.preventDefault()
     let sort_by, order = '';
@@ -106,31 +106,60 @@ export const Articles = () => {
             All Articles
           </h2>
 
-          <DropdownButton
-            drop='end'
-            variant='secondary'
-            title='Sort By'>
-            {['Title (A to Z)',
-              'Title (Z to A)',
-              'Author (A to Z)',
-              'Author (Z to A)',
-              'Date (A to Z)',
-              'Date (Z to A)',
-              'Comment Number (LOW to HIGH)',
-              'Comment Number (HIGH to LOW)',
-              'Votes (LOW to HIGH)',
-              'Votes (HIGH to LOW)'
-            ].map((sortKey) => {
-              return (
-                <Dropdown.Item
-                  key={`${sortKey}`}
-                  onClick={handleSorting}>
-                  {`${sortKey}`}
-                </Dropdown.Item>
-              )
-            })
-            }
-          </DropdownButton>
+          <div className="d-flex justify-content-around">
+            {page === 1 ? <Button
+              size='sm'
+              variant='secondary'
+              disabled>
+              &lt; Previous
+            </Button>
+              :
+              <Button
+                size='sm'
+                variant='secondary'
+                onClick={() => {setPage(page - 1)}}>
+                &lt; Previous
+              </Button>}
+            <DropdownButton
+              drop='end'
+              variant='secondary'
+              title='Sort By'>
+              {['Title (A to Z)',
+                'Title (Z to A)',
+                'Author (A to Z)',
+                'Author (Z to A)',
+                'Date (A to Z)',
+                'Date (Z to A)',
+                'Comment Number (LOW to HIGH)',
+                'Comment Number (HIGH to LOW)',
+                'Votes (LOW to HIGH)',
+                'Votes (HIGH to LOW)'
+              ].map((sortKey) => {
+                return (
+                  <Dropdown.Item
+                    key={`${sortKey}`}
+                    onClick={handleSorting}>
+                    {`${sortKey}`}
+                  </Dropdown.Item>
+                )
+              })
+              }
+            </DropdownButton>
+            {articlesList.length < 9 ?
+            <Button
+              variant='secondary'
+              size='sm'
+              disabled>
+              Next &gt;
+            </Button> 
+            :
+            <Button
+              variant='secondary'
+              size='sm'
+              onClick={() => {setPage(page + 1)}}>
+              Next &gt;
+            </Button>}
+          </div>
 
           <Container
             className='c-2 mt-3'>
@@ -145,16 +174,16 @@ export const Articles = () => {
                     </Card.Title>
                     <Card.Subtitle
                       className='d-flex flex-column text-muted my-3'>
-                      <p 
-                      className='mb-0 py-1'>
+                      <p
+                        className='mb-0 py-1'>
                         <b>From:</b> {article.author}
                       </p>
                       <p
-                      className='mb-0'>
+                        className='mb-0'>
                         {extractDate(article.created_at)} <b>At</b> {extractTime(article.created_at)}
                       </p>
-                      <p 
-                      className='mb-0'>
+                      <p
+                        className='mb-0'>
                         Comments: {article.comment_count}</p>
                     </Card.Subtitle>
                     <Card.Text>

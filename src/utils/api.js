@@ -7,9 +7,8 @@ const handyNews = axios.create({
 
 })
 
-export const getAllArticles = (topic, sort_by, order ) => {
-  // const { topic, sort_by, order } = queryParams
-  return handyNews.get(`/articles/`, { params: { topic, sort_by, order } })
+export const getAllArticles = (topic, sort_by, order, page) => {
+  return handyNews.get(`/articles/`, { params: { topic, sort_by, order, page } })
     .then((articles) => {
       return articles;
     })
